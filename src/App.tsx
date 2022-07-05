@@ -1,12 +1,15 @@
-import { GlobalStyle } from './styles/GlobalStyle'
+import { ThemeProvider } from 'styled-components'
+import theme from './styles/theme'
+import Home from './pages/Home'
+import GlobalStyle from './styles/global'
 
-import { Greetings } from './components/Greetings'
-
-export function App() {
+function App() {
   return (
-    <>
-      <GlobalStyle />
-      <Greetings />
-    </>
+    <ThemeProvider theme={theme}>
+      <Home/>
+      <GlobalStyle/>
+    </ThemeProvider>
   )
 }
+
+export default App

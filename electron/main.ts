@@ -1,4 +1,6 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, shell } from 'electron'
+import theme from '../src/styles/theme'
+import { blue, magenta } from './utils/colorsLogs'
 
 let mainWindow: BrowserWindow | null
 
@@ -15,7 +17,7 @@ function createWindow () {
     // icon: path.join(assetsPath, 'assets', 'icon.png'),
     width: 1100,
     height: 700,
-    backgroundColor: '#191622',
+    backgroundColor: theme.backgroundColor,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -31,11 +33,16 @@ function createWindow () {
 }
 
 async function registerListeners () {
-  /**
-   * This comes from bridge integration, check bridge.ts
-   */
   ipcMain.on('message', (_, message) => {
+    console.log(blue('>> Message receipted'))
+    console.log(magenta(`  >> ${message}`))
     console.log(message)
+  })
+
+  ipcMain.on('openUrl', (_, url) => {
+    console.log(blue('>> URL opened'))
+    console.log(magenta(`  >> ${url}`))
+    shell.openExternal(url)
   })
 }
 
@@ -44,14 +51,6 @@ app.on('ready', createWindow)
   .then(registerListeners)
   .catch(e => console.error(e))
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
+app.on('window-all-closed', () => process.platform !== 'darwin' && app.quit())
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
-  }
-})
+app.on('activate', () => BrowserWindow.getAllWindows().length === 0 && createWindow())
