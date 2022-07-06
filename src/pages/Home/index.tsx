@@ -27,6 +27,7 @@ function Home() {
                     name="message"
                     value={message}
                     placeholder="Mensagem..."
+                    filled={message.length == 0}
                     onChange={ev => setMessage(ev.target.value)}
                 />
                 <Button

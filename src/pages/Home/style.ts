@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import boxShadowPulse from '../../styles/animations/boxShadowPulse'
 
 export const Container = styled.main`
@@ -46,24 +46,38 @@ export const Form = styled.form`
     flex-direction: column;
 `
 
-export const Input = styled.input`
+interface IInput {
+    filled: boolean
+}
+
+export const Input = styled.input<IInput>`
     width: 30%;
     border: none;
     padding: 1.5%;
     font-size: 1.2rem;
-    border-radius: 10px;
+    border-radius: 10px; 
     transition-duration: 0.2s;
     transition-timing-function: linear;
     color: ${props => props.theme.color};
-    background-color: ${props => props.theme.secondary};
+    border: 1px solid ${props => props.filled ? props.theme.primary : props.theme.secondary};
+    background-color: ${props => props.filled ? props.theme.backgroundColor : props.theme.secondary};
     
-    ::placeholder {
-        color: ${props => props.theme.color};
-    }
+    ${props => props.filled && css`
+        box-shadow: ${props => props.theme.primary} 0px 0px 10px 4px;
+        animation: ${props => boxShadowPulse(props.theme.primary)} 1s infinite linear;
+    `}
     
     :focus {
         outline: none;
+        animation: none;
+        box-shadow: none;
+        border-color: ${props => props.theme.secondary};
+        background-color: ${props => props.theme.secondary};
         box-shadow: ${props => props.theme.secondary} 0px 0px 10px 2px;
+    }
+
+    ::placeholder {
+        color: ${props => props.theme.color};
     }
 `
 
