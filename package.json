@@ -1,6 +1,6 @@
 {
   "name": "material-icons-desktop",
-  "author": "Miguel Penha <miguel.penha1@gmail.com> (https://portfolio-miguelpenha.vercel.app/)",
+  "author": "Miguel Penha <miguel.penha1@gmail.com> (https://portfolio-miguelpenha.vercel.app)",
   "version": "1.0.0",
   "description": "Material icons Desktop",
   "main": "./.webpack/main/index.js",
